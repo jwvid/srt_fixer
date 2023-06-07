@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRT Fixer</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: #343a40;
+      color: #fff;
+    }
+
+    .btn-primary,
+    .btn-success,
+    .btn-secondary {
+      transition: all 0.3s ease;
+      border-radius: 30px;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary:hover,
+    .btn-success:hover,
+    .btn-secondary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    #upload {
+      display: none;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background-color: #575f67;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    p {
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .author-link {
+      align-items: center;
+      color: #ffffff;
+      text-decoration: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .author-link .icon {
+      margin-left: 5px;
+    }
+
+    .author-link .icon:hover {
+      color: #fff;
+    }
+
+    .fade.show {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">SRT Fixer</h1>
+    <div class="card">
+      <div class="card-body">
+        <p>이 페이지에서는 Whisper AI를 통하여 작성된 SRT파일의 잘못된 부분을 자동으로 고칠 수 있습니다.</p>
+        <p>변환하려는 SRT 파일을 선택하고 "변환" 버튼을 클릭하여 변환된 파일을 다운로드할 수 있습니다.</p>
+        <p>제작자 : 비됴클래스 <span class="author-link" onclick="window.open('https://www.youtube.com/c/jwvid', '_blank')"><i class="fab fa-youtube"></i></span></p>
+      </div>
+    </div>
+    <div class="form-group mt-4">
+      <input type="file" id="upload" accept=".srt">
+      <button id="uploadBtn" class="btn btn-secondary btn-lg mt-3">클릭 후 변환하려는 SRT파일을 첨부하세요.</button>
+    </div>
+
+    <button id="convert" class="btn btn-primary btn-lg mt-3">변환</button>
+
+    <a id="download" class="btn btn-success btn-lg mt-3 fade" href="#" download>Download</a>
+
+    <div id="result" class="mt-4"></div>
+  </div>
+
+  <script src="srtFixer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.getElementById('uploadBtn').addEventListener('click', function () {
+      document.getElementById('upload').click();
+    });
+    document.getElementById('upload').addEventListener('change', function () {
+      document.getElementById('uploadBtn').innerText = this.files[0].name;
+    });
+  </script>
+</body>
+
+</html>
