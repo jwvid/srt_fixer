@@ -1,4 +1,4 @@
-function removeLeadingSpacesAndFixTiming(srtData) {
+function removeLeadingSpacesAndFixTiming(srtData, removeDots) {
   var newLines = [];
   var modifiedSubs = [];
   var lastEndTime = null;
@@ -26,7 +26,10 @@ function removeLeadingSpacesAndFixTiming(srtData) {
 
       line = formatSrtTimestamp(startTime) + ' --> ' + formatSrtTimestamp(endTime);
     } else if (line.trim() !== '') {
-      line = line.trimStart();
+      line = line.trim();
+      if (removeDots && line.endsWith('.')) {
+        line = line.substring(0, line.length - 1);
+      }
     }
 
     newLines.push(line);
@@ -52,12 +55,13 @@ function formatSrtTimestamp(timestamp) {
 
 document.querySelector('#convert').addEventListener('click', function () {
   var file = document.querySelector('#upload').files[0];
+  var removeDots = document.getElementById('dotRemovalCheckbox').checked;
+  console.log('마침표 제거 체크박스 상태:', removeDots);
 
   if (file) {
     var reader = new FileReader();
     reader.onload = function (event) {
-      console.log('onload event triggered');
-      var result = removeLeadingSpacesAndFixTiming(event.target.result);
+      var result = removeLeadingSpacesAndFixTiming(event.target.result, removeDots);
       var blob = new Blob([result.fixedSrtData], { type: 'text/plain' });
       var url = URL.createObjectURL(blob);
 
@@ -65,12 +69,11 @@ document.querySelector('#convert').addEventListener('click', function () {
       downloadLink.href = url;
       downloadLink.download = file.name.replace('.srt', '_fixed.srt');
 
-      // Fade-in 애니메이션을 위해 'fade' 클래스 제거하고 'show' 클래스 추가
       downloadLink.classList.remove('fade');
       downloadLink.classList.add('show');
 
       var modifiedLines = result.modifiedSubs.map(function (line) {
-        return (line - 1).toString(); // 줄 번호를 1 감소시켜 표시합니다.
+        return (line - 1).toString();
       }).join(', ');
 
       var resultArea = document.querySelector('#result');
@@ -78,14 +81,10 @@ document.querySelector('#convert').addEventListener('click', function () {
       resultArea.innerText = message;
       resultArea.textContent = message;
 
-      // Download 버튼 애니메이션을 위해 'animate__animated' 클래스 추가
       downloadLink.classList.add('animate__animated');
-      // 애니메이션 효과 지속시간을 조절하려면 'animate__duration' 클래스를 추가하여 조절합니다.
-      // 예: downloadLink.classList.add('animate__duration-1s');
     };
     reader.readAsText(file, 'UTF-8');
   } else {
     console.log('No file selected');
   }
 });
-

@@ -75,6 +75,27 @@
     .fade.show {
       display: block;
     }
+
+    /* 체크박스 커스텀 스타일 */
+    .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+      color: #fff;
+      border-color: #007bff;
+      background-color: #007bff;
+    }
+
+    .custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
+      box-shadow: 0 0 0 1px #fff, 0 0 0 2px #007bff;
+    }
+
+    .custom-checkbox .custom-control-label::before {
+      border-radius: 0.25rem;
+    }
+
+    /* 설명 문구 스타일 */
+    .small-text {
+      font-size: 0.8rem;
+      color: #ccc;
+    }
   </style>
 </head>
 
@@ -92,11 +113,13 @@
       <input type="file" id="upload" accept=".srt">
       <button id="uploadBtn" class="btn btn-secondary btn-lg mt-3">클릭 후 변환하려는 SRT파일을 첨부하세요.</button>
     </div>
-
+    <div class="custom-control custom-checkbox mt-4">
+      <input type="checkbox" class="custom-control-input" id="dotRemovalCheckbox">
+      <label class="custom-control-label" for="dotRemovalCheckbox">문장 끝 마침표 제거</label>
+      <small class="form-text small-text">문장이 '.'으로 끝나는 경우 해당 마침표를 제거합니다.</small>
+    </div>
     <button id="convert" class="btn btn-primary btn-lg mt-3">변환</button>
-
     <a id="download" class="btn btn-success btn-lg mt-3 fade" href="#" download>Download</a>
-
     <div id="result" class="mt-4"></div>
   </div>
 
